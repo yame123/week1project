@@ -26,4 +26,11 @@ public class PostResponseDto {
         this.username = post.getUsername();
         this.time = post.getTime();
     }
+
+    public PostResponseDto(String title, String contents, String username, String time) {
+        this.title = title;
+        this.contents = contents;
+        this.username = username;
+        this.time = time;
+    }
 }

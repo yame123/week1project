@@ -13,11 +13,11 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @NoArgsConstructor
 public class Post {
+    private Long id;
     private String title;
     private String contents;
-    private String password;
     private String username;
-    private Long id;
+    private String password;
     private String time;
 
     public Post(PostRequestDto postRequestDto) {
