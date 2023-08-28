@@ -51,6 +51,7 @@ public class week1Controller {
             if(post.getPassword().equals(postRequestDto.getPassword())){
                 post.setTitle(postRequestDto.getTitle());
                 post.setContents(postRequestDto.getContents());
+                post.setUsername(postRequestDto.getUsername());
                 postList.put(id,post);
                 return new PostResponseDto(post);
             } else{
@@ -65,8 +66,13 @@ public class week1Controller {
     public PostResponseDto deletePost(@PathVariable Long id,@RequestBody PostRequestDto postRequestDto){
         if(postList.containsKey(id)) {
             Post post = postList.get(id);
-            postList.remove(id);
-            return new PostResponseDto(post);
+            if(post.getPassword().equals(postRequestDto.getPassword())){
+                postList.remove(id);
+                post.setTitle(post.getTitle()+" 게시물은 삭제되었습니다.");
+                return new PostResponseDto(post);
+            }else{
+                throw new IllegalArgumentException("비밀번호가 다릅니다.");
+            }
         }else{
             throw new IllegalArgumentException("해당 게시물을 찾을 수 없습니다.");
         }
