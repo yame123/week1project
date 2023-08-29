@@ -2,10 +2,6 @@ package com.sparta.week1project.dto;
 
 import com.sparta.week1project.entity.Post;
 import lombok.Getter;
-import org.springframework.cglib.core.Local;
-
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 public class PostResponseDto {

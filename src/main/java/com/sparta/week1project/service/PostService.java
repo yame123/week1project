@@ -5,14 +5,7 @@ import com.sparta.week1project.dto.PostResponseDto;
 import com.sparta.week1project.entity.Post;
 import com.sparta.week1project.repository.PostRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public class PostService {
@@ -43,14 +36,14 @@ public class PostService {
         return postRepository.getOnePost(id);
     }
 
-    public Long updatePost(Long id, PostRequestDto postRequestDto) {
+    public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto) {
         PostRepository postRepository = new PostRepository(jdbcTemplate);
         Post post = postRepository.findById(id);
         // 해당 메모가 DB에 존재하는지 확인
         if (post != null) {
             if(post.getPassword().equals(postRequestDto.getPassword())){
                 postRepository.updatePost(id,postRequestDto);
-                return id;
+                return postRepository.getOnePost(id);
             }else{
                 throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
             }
@@ -61,13 +54,13 @@ public class PostService {
 
 
 
-    public Long deletePost(Long id, PostRequestDto postRequestDto) {
+    public PostResponseDto deletePost(Long id, PostRequestDto postRequestDto) {
         PostRepository postRepository = new PostRepository(jdbcTemplate);
         Post post = postRepository.findById(id);
         if (post != null) {
             if(post.getPassword().equals(postRequestDto.getPassword())){
                 postRepository.deletePost(id,postRequestDto);
-                return id;
+                return new PostResponseDto(post);
             }else{
                 throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
             }
